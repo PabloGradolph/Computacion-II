@@ -1,8 +1,10 @@
 //Imprimiendo Hello, World! por pantalla
 #include <iostream>
 
-int main(int argc, char const *argv[])
-{
-    std::cout << "Hello, World!" << std::endl;
+using namespace std;
+int main(){
+
+    cout<<"Hola mundo"<<endl;
+
     return 0;
 }
