@@ -26,5 +26,18 @@ int main(){
         ++j;
     }while(j<nlen);
 
+    cout<<endl;
+    cout<<"Comparando los números del vector con el valor 2:"<<endl;
+
+    int num = 2;
+    for (i=0; i<nlen; ++i){
+        if (vector1[i]>num){
+            cout<<vector1[i]<<" es mayor que "<<num<<endl;
+        }else if (vector1[i]==num){
+            cout<<vector1[i]<<" es igual que "<<num<<endl;
+        }else {
+            cout<<vector1[i]<<" es menor que "<<num<<endl;
+        }
+    }
     return 0;
 }
