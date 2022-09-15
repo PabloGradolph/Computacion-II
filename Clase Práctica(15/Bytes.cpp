@@ -2,7 +2,7 @@
 using namespace std;
 
 int main(){
-    cout<<"Número de bytes: "<<endl;
+    cout<<"Numero de bytes: "<<endl;
     cout<<"bool: "<<sizeof(bool)<<endl;
     cout<<"unsigned char: "<<sizeof(unsigned char)<<endl;
     cout<<"char: "<<sizeof(char)<<endl;
