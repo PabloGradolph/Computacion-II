@@ -24,9 +24,18 @@ double MaxMinIndice(const double vector[], const int len, double& max, double& m
         }
     }
     
+    int posicionMax, posicionMin;
+    for (int i=0; i<len; ++i){
+        valor = vector[i];
+        if (max==valor){
+            posicionMax = i;
+        } else if (min==valor){
+            posicionMin = i;
+        }
+    }
     // Imprimimos por pantalla el máximo y el mínimo del vector.
-    cout<<"El máximo del vector es: "<<max<<endl;
-    cout<<"El mínimo del vector es: "<<min<<endl;
+    cout<<"El máximo del vector es: "<<max<<" --> Índice: "<<posicionMax<<endl;
+    cout<<"El mínimo del vector es: "<<min<<" --> Índice: "<<posicionMin<<endl;
 }
 
 int main(){
