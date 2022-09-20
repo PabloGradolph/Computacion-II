@@ -64,11 +64,13 @@ int main(){
     cout<<"Por favor, ingrese un punto dentro del intervalo [0,1]: ";cin>>PuntoX;
 
     // El valor de x tiene que estar en el intervalo [0,1].
-    if (PuntoX<0 || PuntoX>1){ // Esto ocurre si el punto x no está en el intervalo.
+    while (PuntoX<0 || PuntoX>1){ // Esto ocurre si el punto x no está en el intervalo.
         cout<<"El punto no se encuentra dentro del intervalo."<<endl;
-    } else { // Si el punto x es correcto se llama a la función para que ejecute todo.
-        DistintosEjemplos(PuntoX);
+        cout<<"Por favor, ingrese un punto dentro del intervalo [0,1]: ";cin>>PuntoX;
     }
+
+    // Si el punto x es correcto se llama a la función para que ejecute todo.
+    DistintosEjemplos(PuntoX);
 
     return 0;
 }
