@@ -1,9 +1,6 @@
 #include <iostream>
 using namespace std;
 
-template <typename T>
-class matrix;
-
 #include <cmatrix>
 using namespace techsoft;
 
@@ -14,7 +11,7 @@ int main(){
   int nrows=2, ncols=3;
   matrix<double> A(nrows,ncols);
 
-  //cout << "Elemento (0,0) = " << A(0,0) << endl;
+  cout << "Elemento (0,0) = " << A(0,0) << endl;
 
   return 0;
 }
