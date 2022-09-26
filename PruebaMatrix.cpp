@@ -2,9 +2,9 @@
 #include <iostream>
 using namespace std;
 
-#include <string.h>   // Línea 1/3 para incluir matrix.h
-#include "matrix.h"   // Línea 2/3 para incluir matrix.h
-using namespace math; // Línea 3/3 para incluir matrix.h
+#include <string.h>   // LÃ­nea 1/3 para incluir matrix.h
+#include "matrix.h"   // LÃ­nea 2/3 para incluir matrix.h
+using namespace math; // LÃ­nea 3/3 para incluir matrix.h
 
 int main(){
   // Definimos una matriz
