@@ -1,0 +1,2 @@
+#ITERACIONES
+	nb	ns	nn
