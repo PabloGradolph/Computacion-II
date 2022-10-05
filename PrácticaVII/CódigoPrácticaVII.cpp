@@ -139,6 +139,30 @@ int main(){
             matrix<double> X; X.null();
             X = MetodoLU(A, B);
             cout<<"La matriz de soluciones es:"<<endl; cout<<X;
+
+            // Calculamos el error obtenido en las constantes A, B y C del ejercicio 2.
+            // Esta parte del código también debe ser borrada/comentada si solo queremos calcular X por el método LU.
+            string file = "RefraccionYLongitudesOnda.txt";
+            ifstream f(file);
+            if (f.is_open()){
+                int nrows = 0, ncols = 0;
+                f >> nrows >> ncols;
+                matrix<double> N(nrows, ncols);
+                f >> N;
+
+                cout<<endl;
+                cout<<"Mostrando los errores cometidos para cada valor de n:"<<endl;
+
+                double error = 0.0;
+                for (int i=0; i<nrows; i++){
+                    error = N(i,1) - (X(0,0) + X(1,0)/pow(N(i,0), 2) + X(2,0)/pow(N(i,0), 4));
+                    cout<<error<<endl;
+                }
+
+            } else {
+                cout<<"No se ha podido abrir el fichero "<<file<<endl;
+            }
+
         }else {
             cout<<"No se ha podido abrir el fichero "<<binfile<<endl;
         }
