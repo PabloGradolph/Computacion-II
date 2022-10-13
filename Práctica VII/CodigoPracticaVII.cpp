@@ -8,6 +8,8 @@ using namespace std;
 #include <cmatrix>
 using namespace techsoft;
 
+#include <chrono>
+using namespace chrono;
 
 matrix<double> MetodoLU(matrix<double> A, matrix<double> B){
     int arows = 0, acols = 0, brows = 0, bcols = 0;
@@ -135,10 +137,20 @@ int main(){
             ffile.close();
             ff.close();
 
+            // Medimos cuanto tarda el proceso de cálculo de X a partir de A y F
+            time_point<system_clock> start, end;
+            duration<double> elapsed_seconds;
+            start = system_clock::now();
+
             // Definimos la que será la matriz solución por el método LU
             matrix<double> X; X.null();
             X = MetodoLU(A, B);
             cout<<"La matriz de soluciones es:"<<endl; cout<<X;
+
+            // Aquí se termina de medir el tiempo y se imprime por pantalla.
+            end = system_clock::now();
+            elapsed_seconds = end - start;
+            cout<<"* Tiempo LU (s) = "<<elapsed_seconds.count()<<endl;
 
             // Calculamos el error obtenido en las constantes A, B y C del ejercicio 2.
             // Esta parte del código también debe ser borrada/comentada si solo queremos calcular X por el método LU.

@@ -1,0 +1,11 @@
+La matriz solución tras aplicar el método LU para matrices tridiagonales es:
+46.4098
+85.6392
+96.1471
+98.9492
+99.6497
+99.6497
+98.9492
+96.1471
+85.6392
+46.4098
