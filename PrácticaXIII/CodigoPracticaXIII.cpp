@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <math.h>
+#include <iomanip>
 using namespace std;
 
 // Función que calcula los radianes en función de los grados pasado como argumento.
@@ -86,18 +87,65 @@ double Simpson(int n, double a, double b, double TH){
     return I;
 }
 
-double CuadraturaGaussiana(int puntos){
+double CuadraturaGaussiana(int n, double a, double b, double TH){
     
-    if (puntos == 1){
-        double wi = 2.0, xi = 0.0;
-    } else if (puntos == 2){
-        double wi = 1, x1 = 1/sqrt(3), x2 = -1/sqrt(3);
-    } else if (puntos == 3){
-        
-    }
-    
-    // Calculamos la integral
+    // Calculamos la integral para los 5 posibles casos (hasta 5 puntos)
     double I = 0.0;
+    double wi = 0.0;
+    double xi = 0.0;
+
+    if (n == 1){
+
+        xi = 0.0;
+        wi = 2.0;
+        I = wi*FuncionCG(b, a, TH, xi);
+
+    } else if (n == 2){
+
+        double x1 = 1/sqrt(3), x2 = -1/sqrt(3);
+        wi = 1.0;
+        I = wi*FuncionCG(b, a, TH, x1);
+        I = I + wi*FuncionCG(b, a, TH, x2);
+
+    } else if (n==3){
+
+        xi = 0.0;
+        wi = 8/9.0;
+        I = wi * FuncionCG(b, a, TH, xi);
+
+        xi = -0.774597;
+        wi = 5/9.0;
+        I = I + wi * FuncionCG(b, a, TH, xi);
+        I = I + wi * FuncionCG(b, a, TH, -xi);
+
+    } else if (n==4){
+
+        xi = -0.339981;
+        wi = 0.652145;
+        I = wi * FuncionCG(b, a, TH, xi);
+        I = I + wi * FuncionCG(b, a, TH, -xi);
+
+        xi = -0.861136;
+        wi = 0.347855;
+        I = I + wi * FuncionCG(b, a, TH, xi);
+        I = I + wi * FuncionCG(b, a, TH, -xi);
+
+    } else if (n==5){
+
+        xi = 0.0;
+        wi = 0.568889;
+        I = wi * FuncionCG(b, a, TH, xi);
+
+        xi = -0.538469;
+        wi = 0.478629;
+        I = I + wi * FuncionCG(b, a, TH, xi);
+        I = I + wi * FuncionCG(b, a, TH, -xi);
+
+        xi = -0.90618;
+        wi = 0.236927;
+        I = I + wi * FuncionCG(b, a, TH, xi);
+        I = I + wi * FuncionCG(b, a, TH, -xi);
+    }
     
     return I;
 }
@@ -117,89 +165,39 @@ int main(){
     // I = Trapezoidal(4, 0, M_PI/2, 0);
     // cout<<I;
     //
-
-    // Calculamos todas las integrales (regla trapecio 4 intervalos) variando el valor TH.
+    
+    // Guardamos todos los resultados en un mismo fichero (Trapecio, Simpson, CuadraturaGaussiana para 4 y 20 intervalos y para 2 y 5 puntos (enunciado)).
     // Vamos guardando los resultados en un fichero.
-    string infile = "Trapezoidal4intervalos.txt";
-    ofstream file(infile);
-    if (file.is_open()){
+    string gfile = "Resultados.txt";
+    ofstream ffile(gfile);
+    if (ffile.is_open()){
         // Encabezados del fichero.
-        file << "Método trapezoidal para 4 intervalos:"<<endl;
-        file << "Se muestran todas las integrales variando el valor de Theta de 0 a 100º de 5 en 5º:"<<endl;
-        file << "Theta" << "\t" << "T/T'" << endl;
+        ffile << "                ---  INTEGRACIÓN NUMÉRICA  ---"<<endl;
+        ffile << "Se muestran todas las integrales variando el valor de Theta de 0 a 100º de 5 en 5º:"<<endl;
+        ffile << "Theta    Trapecio(4)    Trapecio(20)    Simpson(4)    Simpson(20)    Cuadratura(2)    Cuadratura(5)" << endl;
         
         // Definimos, calculamos e insertamos los datos en el fichero.
-        double theta = 0.0, I = 0.0;
+        ffile << setprecision(4);
+        double theta = 0.0, I1 = 0.0, I2 = 0.0, I3 = 0.0, I4 = 0.0, I5 = 0.0, I6 = 0.0;
         for (int TH=0; TH<=100; TH=TH+5){
             theta = Radianes(TH);
-            I = Trapezoidal(4, 0, M_PI/2, theta);
-            file << TH << "\t" << I << endl;
+            I1 = Trapezoidal(4, 0, M_PI/2, theta);
+            I2 = Trapezoidal(20, 0, M_PI/2, theta);
+            I3 = Simpson(4, 0, M_PI/2, theta);
+            I4 = Simpson(20, 0, M_PI/2, theta);
+            I5 = CuadraturaGaussiana(2, 0, M_PI/2, theta);
+            I6 = CuadraturaGaussiana(5, 0, M_PI/2, theta);
+            ffile << TH << "\t\t ";
+            ffile << I1 << "\t\t\t";
+            ffile << I2 << "\t\t\t";
+            ffile << I3 << "\t\t\t";
+            ffile << I4 << "\t\t\t";
+            ffile << I5 << "\t\t\t";
+            ffile << I6 << "\t\t\t";
+            ffile << endl;
         }
 
-        file.close();
-    }
-
-    // Calculamos todas las integrales (regla trapecio 20 intervalos) variando el valor TH.
-    // Vamos guardando los resultados en un fichero.
-    string afile = "Trapezoidal20intervalos.txt";
-    ofstream f(afile);
-    if (f.is_open()){
-        // Encabezados del fichero.
-        f << "Método trapezoidal para 20 intervalos:"<<endl;
-        f << "Se muestran todas las integrales variando el valor de Theta de 0 a 100º de 5 en 5º:"<<endl;
-        f << "Theta" << "\t" << "T/T'" << endl;
-        
-        // Definimos, calculamos e insertamos los datos en el fichero.
-        double theta = 0.0, I = 0.0;
-        for (int TH=0; TH<=100; TH=TH+5){
-            theta = Radianes(TH);
-            I = Trapezoidal(20, 0, M_PI/2, theta);
-            f << TH << "\t" << I << endl;
-        }
-
-        f.close();
-    }
-
-    // Calculamos todas las integrales (regla simpson 4 intervalos) variando el valor TH.
-    // Vamos guardando los resultados en un fichero.
-    string bfile = "Simpson4intervalos.txt";
-    ofstream ff(bfile);
-    if (ff.is_open()){
-        // Encabezados del fichero.
-        ff << "Método Simpson 1/3 compuesto para 4 intervalos:"<<endl;
-        ff << "Se muestran todas las integrales variando el valor de Theta de 0 a 100º de 5 en 5º:"<<endl;
-        ff << "Theta" << "\t" << "T/T'" << endl;
-        
-        // Definimos, calculamos e insertamos los datos en el fichero.
-        double theta = 0.0, I = 0.0;
-        for (int TH=0; TH<=100; TH=TH+5){
-            theta = Radianes(TH);
-            I = Simpson(4, 0, M_PI/2, theta);
-            ff << TH << "\t" << I << endl;
-        }
-
-        ff.close();
-    }
-
-    // Calculamos todas las integrales (regla simpson 20 intervalos) variando el valor TH.
-    // Vamos guardando los resultados en un fichero.
-    string cfile = "Simpson20intervalos.txt";
-    ofstream ffl(cfile);
-    if (ffl.is_open()){
-        // Encabezados del fichero.
-        ffl << "Método Simpson 1/3 compuesto para 20 intervalos:"<<endl;
-        ffl << "Se muestran todas las integrales variando el valor de Theta de 0 a 100º de 5 en 5º:"<<endl;
-        ffl << "Theta" << "\t" << "T/T'" << endl;
-        
-        // Definimos, calculamos e insertamos los datos en el fichero.
-        double theta = 0.0, I = 0.0;
-        for (int TH=0; TH<=100; TH=TH+5){
-            theta = Radianes(TH);
-            I = Simpson(20, 0, M_PI/2, theta);
-            ffl << TH << "\t" << I << endl;
-        }
-
-        ff.close();
+        ffile.close();
     }
 
     return 0;
