@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-// Definimos una función void(vacío) por lo que no hace falta return
+// Definimos una función void(vacío) por lo que no hace falta return.
 void area(){
   // Definimos pi
   float pi = 22./7.;
@@ -25,8 +25,7 @@ double area_circulo(double radio){
     return area;
 }
 
-// Declarando una función con parámetros opcionales
-
+// Declarando una función con parámetros opcionales. (El segundo lo podemos pasar o no)
 double area_circle(double radio, double pi = 3.141592){
     double area = 0.;
     area = pi * radio * radio;

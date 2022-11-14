@@ -12,6 +12,7 @@ using namespace techsoft;
 using namespace chrono;
 
 matrix<double> MetodoLU(matrix<double> A, matrix<double> B){
+    // Guardamos el tamaño de las matrices pasadas como argumento.
     int arows = 0, acols = 0, brows = 0, bcols = 0;
     arows = A.rowno();
     acols = A.colno();

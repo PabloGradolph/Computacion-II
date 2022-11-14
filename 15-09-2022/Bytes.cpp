@@ -2,6 +2,7 @@
 using namespace std;
 
 int main(){
+    // Número de bytes utilizados por cada tipo de dato.
     cout<<"Numero de bytes: "<<endl;
     cout<<"bool: "<<sizeof(bool)<<endl;
     cout<<"unsigned char: "<<sizeof(unsigned char)<<endl;

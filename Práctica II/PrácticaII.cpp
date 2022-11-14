@@ -30,6 +30,7 @@ double F(double g){
     // Retornamos el valor F.
     return F;
 }
+
 // Esta función calcula el valor de g, y le manda el valor a la función anterior para calcular F.
 void DistintosEjemplos(double PuntoX){
     // Cálculo de g en los distintos casos.

@@ -48,6 +48,7 @@ int Biseccion1(double PuntoX1, double PuntoX2, double tol,int n){
         }
     }
 }
+
 // Función para obtener el resultado por el método de la Bisección sin imprimir por pantalla el resultado.
 int Biseccion2(double PuntoX1, double PuntoX2, double tol,int n){
     double PuntoX3, FuncionX3;
@@ -86,6 +87,7 @@ int Secante1(double PuntoX0, double PuntoX1, double tol, int n){
         Secante1(PuntoX1, PuntoX2, tol, n);
     }
 }
+
 // Función para obtener el resultado por el método de la Secante sin imprimir por pantalla el resultado.
 int Secante2(double PuntoX0, double PuntoX1, double tol, int n){
     double PuntoX2, FuncionX2;
@@ -116,6 +118,7 @@ int Newton1(double PuntoX0, double tol, int n){
         Newton1(PuntoX1, tol, n);
     }
 }
+
 // Función para obtener el resultado por el método de Newton sin imprimir por pantalla el resultado.
 int Newton2(double PuntoX0, double tol, int n){
     double PuntoX1, FuncionX1, DerivadaX1;

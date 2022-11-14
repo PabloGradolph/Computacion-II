@@ -4,7 +4,7 @@ using namespace std;
 #include <cmatrix>
 using namespace techsoft;
 
-// Información de la clase: https://www.techsoftpl.com/matrix/doc/manual.htm
+// Información de la clase (librería cmatrix): https://www.techsoftpl.com/matrix/doc/manual.htm
 int main(){
 
   // Definimos una matriz

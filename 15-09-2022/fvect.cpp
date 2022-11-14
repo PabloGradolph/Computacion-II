@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+// Función que imprime los elementos de un vector.
 void elementos(const double vect[], const int len){
     // Escribe los elementos del vector
     for (int i=0; i<len; ++i){
@@ -9,6 +10,7 @@ void elementos(const double vect[], const int len){
     }
 }
 
+// Función que imprime los caracteres de un vector.
 void caracteres(char vect2[], const int len){
     // Escribe los elementos del vector
     for (int i=0; i<len; ++i){

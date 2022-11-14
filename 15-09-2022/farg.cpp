@@ -6,12 +6,12 @@ using namespace std;
 const double pi1 = atan(1)*4.;
 const double pi2 = M_PI;
 
-
-
+// Función que retorna el doble del valor pasado como argumento.
 double doble(double num){
   return num*2.;
 }
 
+// Función que retorna la mitad del valor pasado como argumento.
 double mitad(double num){
   return num/2.;
 }
@@ -25,6 +25,7 @@ int main(){
   //Imprimiendo los pi
   cout<<"Primera definición de pi: "<<pi1<<endl;
   cout<<"Segunda definición de pi: "<<pi2<<endl;
+
   // Pide un número
   cout << "Real:";
   double num = 0.;
