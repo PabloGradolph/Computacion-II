@@ -11,14 +11,39 @@ using namespace techsoft;
 #include <chrono>
 using namespace chrono;
 
+// Función que calcula la nomra máxima de una matriz. Pasando como parámetro una matriz.
+// Usaremos esta función para ver si nuestro resultado es correcto dentro de una tolerancia.
+double NormaMaximaMatriz(matrix<double> A){
+    // Tamaño de la matriz pasada como argumento.
+    int arows = 0, acols = 0;
+    arows = A.rowno();
+    acols = A.colno();
+
+    double sumatorio = 0.0, fila_anterior = 0.0, maximo = 0.0;
+    for (int i=0; i<arows; i++){
+        fila_anterior = sumatorio;
+        sumatorio = 0.0;
+        for (int j=0; j<acols; j++){
+            sumatorio = sumatorio + fabs(A(i,j));
+        }
+        if (sumatorio>fila_anterior){
+            maximo = sumatorio;
+        }
+    }
+
+    return maximo;
+}
+
+// Función para el cálculo de la solución de un sistema de ecuaciones lineal por el método de factorización LU.
 matrix<double> MetodoLU(matrix<double> A, matrix<double> B){
-    // Guardamos el tamaño de las matrices pasadas como argumento.
+    // Guardamos el tamaño de las matrices pasadas como argumento. (A*X=B) siendo X la solución que buscamos.
     int arows = 0, acols = 0, brows = 0, bcols = 0;
     arows = A.rowno();
     acols = A.colno();
     brows = B.rowno();
     bcols = B.colno();
 
+    // Definimos las matrices L y U que utilizaremos más adelante.
     matrix<double> L(arows, acols); L.null();
     matrix<double> U(arows, acols); U.null();
 
@@ -26,16 +51,19 @@ matrix<double> MetodoLU(matrix<double> A, matrix<double> B){
     for (int i=0; i<arows; i++){
         for (int j=0; j<acols; j++){
             if (i==j){
+                // Los elementos de la diagonal en L son unos.
                 L(i,j) = 1;
             }else if (i>j){
+                // Por debajo de la diagonal los elementos de U son ceros.
                 U(i,j) = 0;
             }else{
+                // Por encima de la diagonal los elementos de L son ceros.
                 L(i,j) = 0;
             }
         }
     }
 
-    // Establecemos la primera fila de la matriz U.
+    // Establecemos la primera fila de la matriz U que es igual a la de coeficientes A.
     for(int i=0; i<acols; i++){
         U(0,i) = A(0, i);
     }
@@ -52,14 +80,14 @@ matrix<double> MetodoLU(matrix<double> A, matrix<double> B){
     // Calculamos el resto de números de las matrices
     for (int i=0; i<arows; i++){
         for (int j=0; j<acols; j++){
-            // Si i = j, calculamos el valor de U(i,j)
+            // Si i = j, calculamos el valor de U(i,j). Son los elementos de la diagonal, en L son los unos anteriores.
             if (i==j){
                 matrix<double> SUM(arows, acols); SUM.null();
                 for (int k=0; k<i; k++){
                     SUM(i,j) = SUM(i,j) + (L(i,k)*U(k,j));
                     U(i,j) = A(i,j) - SUM(i,j);
                 }
-            // Si i>j y no estamos en la primera columna(ya calculada) calculamos el valor de L(i,j)
+            // Si i>j y no estamos en la primera columna (ya calculada) calculamos el valor de L(i,j)
             } else if(i>j && j!=0){
                 matrix<double> SUM(arows, acols); SUM.null();
                 for (int k=0; k<j; k++){
@@ -77,8 +105,9 @@ matrix<double> MetodoLU(matrix<double> A, matrix<double> B){
         }
     }
 
-    // Resolvemos ahora L*z = b
+    // Resolvemos ahora L*z = b. Sacamos el valor de z.
     matrix<double> z(brows, bcols); z.null();
+    // Necesitamos el primer valor de z para calcular los siguientes. Gracias a la forma de L z(0,0) = B(0,0).
     z(0,0) = B(0,0);
     for (int i=0; i<arows; i++){
         double sum=0.0;
@@ -86,11 +115,12 @@ matrix<double> MetodoLU(matrix<double> A, matrix<double> B){
             sum = sum + L(i,j)*z(j,0);
         }
         if (i!=0){
+            // El valor donde i = 0 es el primero que hemos calculado.
             z(i,0) = B(i,0) - sum;
         }
     }
 
-    // Resolvemos ahora U*x=z
+    // Resolvemos ahora U*x=z.
     matrix<double> x(brows, bcols); x.null();
     for (int i=arows-1; i>=0; i--){
         double sum=0.0;
@@ -100,9 +130,12 @@ matrix<double> MetodoLU(matrix<double> A, matrix<double> B){
         x(i,0) = (z(i,0) - sum)/U(i,i);
     }
     return x;
+
+    // Las fórmulas para los cálculos anteriores están en la teoría. Página 3 del pdf "SistemaslinealesMétodosdirectos".
 }
 
 int main(){
+    // Nombres de los archivos donde están las matrices y los abrimos en modo lectura.
     string ainfile = "matrizA2.txt";
     string binfile = "matrizB2.txt";
     ifstream ffile(ainfile);
@@ -153,11 +186,21 @@ int main(){
             elapsed_seconds = end - start;
             cout<<"* Tiempo LU (s) = "<<elapsed_seconds.count()<<endl;
 
+            // Comprobamos que nuestro resultado es correcto para una cierta tolerancia.
+            double tol = 0.001, max = 0.0;
+            matrix<double> Sol; Sol.null();
+            Sol = A*X-B; max = NormaMaximaMatriz(Sol);
+            if (max > tol){
+                cout<<endl;
+                cout<<"Tras la comprobación A*X-B = 0, hay algún valor de la matriz que no está por debajo de la tolerancia."<<endl;
+            }
+
             // Calculamos el error obtenido en las constantes A, B y C del ejercicio 2.
             // Esta parte del código también debe ser borrada/comentada si solo queremos calcular X por el método LU.
             string file = "RefraccionYLongitudesOnda.txt";
             ifstream f(file);
             if (f.is_open()){
+                // Leemos del archivo los valores de los diferentes índices de refracción (segunda columna).
                 int nrows = 0, ncols = 0;
                 f >> nrows >> ncols;
                 matrix<double> N(nrows, ncols);
@@ -168,6 +211,8 @@ int main(){
 
                 double error = 0.0;
                 for (int i=0; i<nrows; i++){
+                    // X(0,0) = A; X(1,0) = B; X(2,0) = C.
+                    // Seguimos la ecuación n = A + B/(lambda)^2 + C/(lambda)^4
                     error = N(i,1) - (X(0,0) + X(1,0)/pow(N(i,0), 2) + X(2,0)/pow(N(i,0), 4));
                     cout<<error<<endl;
                 }
@@ -185,5 +230,4 @@ int main(){
     }
 
     return 0;
-
 }

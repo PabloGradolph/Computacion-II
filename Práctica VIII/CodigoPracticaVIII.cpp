@@ -10,6 +10,7 @@ using namespace techsoft;
 
 // Función que retorna True o False en función de si la matriz pasada como parámetro es Diagonal Dominante o no.
 bool DominanteDiagonal(matrix<double> A){
+    // Inicializamos las variables y calculamos el tamaño de la matriz pasada como argumento.
     bool dominante = false;
     int arows = 0, acols = 0;
     arows = A.rowno(); acols = A.colno();
@@ -76,6 +77,8 @@ double NormaMaximaMatriz(matrix<double> A){
 
 // Función que calcula la solución de un sistema de ecuaciones lineales mediante el método iterativo de Jacobi.
 matrix<double> MetodoJacobi(matrix<double> A, matrix<double> B){
+    // Inicializamos las iteraciones a 0 y calculamos el tamaño de las matrices pasadas como argumento.
+    // Pasamos la matriz de coeficientes y la matriz solución del sistema.
     int iteraciones = 0;
     int arows = 0, acols = 0, brows = 0, bcols = 0;
     arows = A.rowno();
@@ -83,6 +86,7 @@ matrix<double> MetodoJacobi(matrix<double> A, matrix<double> B){
     brows = B.rowno();
     bcols = B.colno();
 
+    // Tres matrices que iremos usando durante las iteraciones.
     matrix<double> old_x(brows, bcols); old_x.null();
     matrix<double> new_x(brows, bcols); new_x.null();
     matrix<double> new_A(arows, acols); new_A.null();
@@ -99,7 +103,7 @@ matrix<double> MetodoJacobi(matrix<double> A, matrix<double> B){
         }
     }
 
-    // Definimos la matriz solución exacta
+    // Definimos la matriz solución exacta.
     matrix<double> solucion(brows, bcols); solucion.null();
     solucion(0,0) = -0.2568; solucion(1,0) = -1.0236;
     solucion(2,0) = 0.4527; solucion(3,0) = 0.1014;
@@ -139,7 +143,10 @@ matrix<double> MetodoJacobi(matrix<double> A, matrix<double> B){
     return new_x;
 }
 
+// Función que calcula la solución de un sistema de ecuaciones lineales mediante el método iterativo de Gauss-Seidel.
 matrix<double> MetodoGauss(matrix<double> A, matrix<double> B){
+    // Inicializamos las iteraciones a 0 y calculamos el tamaño de las matrices pasadas como argumento.
+    // Pasamos la matriz de coeficientes y la matriz solución del sistema.
     int iteraciones = 0;
     int arows = 0, acols = 0, brows = 0, bcols = 0;
     arows = A.rowno();
@@ -147,11 +154,12 @@ matrix<double> MetodoGauss(matrix<double> A, matrix<double> B){
     brows = B.rowno();
     bcols = B.colno();
 
+    // Tres matrices que iremos usando durante las iteraciones.
     matrix<double> old_x(brows, bcols); old_x.null();
     matrix<double> new_x(brows, bcols); new_x.null();
     matrix<double> new_A(arows, acols); new_A.null();
 
-    // Calculamos las matrices de coeficientes
+    // Calculamos las matrices de coeficientes.
     for (int i=0; i<arows; i++){
         B(i,0) = B(i,0)/A(i,i);
         for(int j=0; j<acols; j++){
@@ -163,7 +171,7 @@ matrix<double> MetodoGauss(matrix<double> A, matrix<double> B){
         }
     }
 
-    // Definimos la matriz solución exacta
+    // Definimos la matriz solución exacta.
     matrix<double> solucion(brows, bcols); solucion.null();
     solucion(0,0) = -0.2568; solucion(1,0) = -1.0236;
     solucion(2,0) = 0.4527; solucion(3,0) = 0.1014;
@@ -202,6 +210,7 @@ matrix<double> MetodoGauss(matrix<double> A, matrix<double> B){
 }
 
 int main(){
+    // Leemos los archivos donde se encuentran las matrices de coeficientes y solución.
     string ainfile = "matrizA.txt";
     string binfile = "matrizB.txt";
     ifstream ffile(ainfile);
@@ -236,15 +245,33 @@ int main(){
 
             cout<<endl;
             
+            // Calculamos e imprimimos los resultados para el método de Jacobi.
             matrix<double> X(brows, bcols);
             X = MetodoJacobi(A, B);
             cout<<"Matriz solución tras ese número de iteraciones: "<<endl<<X;
             cout<<endl;
 
+            // Comprobamos que nuestro resultado es correcto para una cierta tolerancia.
+            double tol = 0.001, max = 0.0;
+            matrix<double> Sol; Sol.null();
+            Sol = A*X-B; max = NormaMaximaMatriz(Sol);
+            if (max > tol){
+                cout<<endl;
+                cout<<"Tras la comprobación A*X-B = 0, hay algún valor de la matriz que no está por debajo de la tolerancia."<<endl;
+            }
+
+            // Lo mismo para el método de Gauss.
             X = MetodoGauss(A, B);
             cout<<"Matriz solución tras ese número de iteraciones: "<<endl<<X;
             cout<<endl;
 
+            // Comprobamos que nuestro resultado es correcto para una cierta tolerancia.
+            max = 0.0;
+            Sol = A*X-B; max = NormaMaximaMatriz(Sol);
+            if (max > tol){
+                cout<<endl;
+                cout<<"Tras la comprobación A*X-B = 0, hay algún valor de la matriz que no está por debajo de la tolerancia."<<endl;
+            }
         }
     }
 

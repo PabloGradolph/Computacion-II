@@ -113,6 +113,36 @@ bool Tridiagonal(matrix<double> A){
     return Tridiagonal;
 }
 
+// Función para comprobar si la matriz es cuadrada.
+bool Cuadrada(matrix<double> A){
+    // Definimos el tamaño de la matriz A pasada como argumento.
+    int arows = 0, acols = 0;
+    arows = A.rowno();
+    acols = A.colno();
+
+    // Booleano que define si la matriz es cuadrada o no.
+    bool cuadrada = false;
+    if (arows == acols){
+        cuadrada = true;
+    }
+
+    return cuadrada;
+}
+
+// Función que devuelve true o false en función de si el número de columnas de A es igual al número de filas de B.
+bool FilasColumnas(matrix<double> A, matrix<double> B){
+    // Comparamos las filas de A con las columnas de B.
+    int acols = 0, brows = 0;
+    acols = A.colno(); brows = B.rowno();
+
+    bool iguales = false;
+    if (acols == brows){
+        iguales = true;
+    }
+
+    return iguales;
+}
+
 // Función que ejecuta el método LU para el caso donde la matriz A pasada como argumento es tridiagonal.
 matrix<double> LuTridiagonal(matrix<double> A, matrix<double>F){
     // Definimos el tamaño de las matrices pasadas como argumentos.
@@ -127,7 +157,7 @@ matrix<double> LuTridiagonal(matrix<double> A, matrix<double>F){
     matrix<double> a(arows-1, 1); a.null();
     matrix<double> c(arows-1, 1); c.null();
 
-    // Bucle en el que se dan los valores correspondientes a estos 3 vectores.
+    // Bucle en el que se dan los valores correspondientes a estos 3 vectores. Son las 3 diagonales.
     for (int i=0; i<arows; i++){
         for (int j=0; j<acols; j++){
             if (i==j){
@@ -207,9 +237,10 @@ int main(){
             matrix<double> A(n,n);
             ffile >> A;
 
-            // Comprobamos que la matriz A es tridiagonal mediante la función que hemos creado anteriormente.
-            bool tridiagonal;
+            // Comprobamos que la matriz A es tridiagonal y cuadrada mediante las funciones que hemos creado anteriormente.
+            bool tridiagonal, cuadrada;
             tridiagonal = Tridiagonal(A);
+            cuadrada = Cuadrada(A);
 
             // Tanto si es tridiagonal como si no, se avisa.
             if (tridiagonal == true){
@@ -218,43 +249,63 @@ int main(){
                 cout<<"La matriz A no es tridiagonal"<<endl;
             }
 
+            // Tanto si la matriz es cuadrada como si no, se avisa.
+            if (cuadrada == true){
+                cout<<"La matriz A es cuadrada"<<endl;
+            } else {
+                cout<<"La matriz A no es cuadrada"<<endl;
+            }
+
             // Sólo en caso de ser tridiagonal, seguiremos adelante.
-            if (tridiagonal == true){
+            if (tridiagonal == true && cuadrada == true){
                 // Leemos del fichero la matriz F.
                 matrix<double> F(n,1);
                 ff >> F;
 
-                // Medimos cuanto tarda el proceso de cálculo de X a partir de A y F
-                time_point<system_clock> start, end;
-                duration<double> elapsed_seconds;
-                start = system_clock::now();
+                // Comprobamos que el número de columnas de A es igual que el número de filas de F.
+                bool iguales;
+                iguales = FilasColumnas(A, F);
 
-                // Calculamos la matriz solución X mediante la función definida anteriormente.
-                matrix<double> X;
-                X = LuTridiagonal(A, F);
+                // Sólo continuamos si se cumple la condición.
+                if (iguales == true){
+                    // Medimos cuanto tarda el proceso de cálculo de X a partir de A y F
+                    time_point<system_clock> start, end;
+                    duration<double> elapsed_seconds;
+                    start = system_clock::now();
 
-                // Aquí se termina de medir el tiempo y se imprime por pantalla.
-                end = system_clock::now();
-                elapsed_seconds = end - start;
-                cout<<"* Tiempo LU Tridiagonal (s) = "<<elapsed_seconds.count()<<endl;
+                    // Calculamos la matriz solución X mediante la función definida anteriormente.
+                    matrix<double> X;
+                    X = LuTridiagonal(A, F);
 
-                // Comprobamos si la matriz solución es correcta para una cierta tolerancia.
-                bool correcto = false;
-                correcto = ResultadoCorrecto(A, F, X, 0.0001);
-                if (correcto==true){
-                    cout<<"La matriz solución X es correcta para una tolerancia 0.0001"<<endl;
+                    // Aquí se termina de medir el tiempo y se imprime por pantalla.
+                    end = system_clock::now();
+                    elapsed_seconds = end - start;
+                    cout<<"* Tiempo LU Tridiagonal (s) = "<<elapsed_seconds.count()<<endl;
+
+                    // Comprobamos si la matriz solución es correcta para una cierta tolerancia.
+                    bool correcto = false;
+                    correcto = ResultadoCorrecto(A, F, X, 0.0001);
+                    if (correcto==true){
+                        cout<<"La matriz solución X es correcta para una tolerancia 0.0001"<<endl;
+                    } else {
+                        cout<<"La matriz solución X NO es correcta para una tolerancia 0.0001"<<endl;
+                    }
+
+                    // Se guarda el resultado en un fichero externo.
+                    string infile = "ResultadoLuTridiagonal.txt";
+                    ofstream file(infile);
+                    if (file.is_open()){
+                        file << "La matriz solución tras aplicar el método LU para matrices tridiagonales es:"<<endl;
+                        file << X;
+                    }
                 } else {
-                    cout<<"La matriz solución X NO es correcta para una tolerancia 0.0001"<<endl;
+                    cout<<"El número de columnas de A no coincide con el número de filas de F"<<endl;
                 }
-
-                // Se guarda el resultado en un fichero externo.
-                string infile = "ResultadoLuTridiagonal.txt";
-                ofstream file(infile);
-                if (file.is_open()){
-                    file << "La matriz solución tras aplicar el método LU para matrices tridiagonales es:"<<endl;
-                    file << X;
-                }
+            } else {
+                cout<<"La matriz no es tridiagonal o cuadrada."<<endl;
             }
         }
     }
+
+    return 0;
 }

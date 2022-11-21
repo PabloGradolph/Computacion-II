@@ -48,7 +48,6 @@ matrix<double> MatrizFunciones(matrix<double> xx){
 // Función que calcula la matriz Jacobiana f'(x).
 matrix<double> Jacobiana(matrix<double> xx){
     // Definimos las variables x, y, z que vienen de la matriz xx.
-    // Definimos también las funciones que van a formar la matriz Jacobiana.
     double x = xx(0,0), y = xx(1,0), z = xx(2,0);
 
     // Creamos la matriz Jacobiana con 3 filas y 3 columnas.
@@ -66,7 +65,7 @@ matrix<double> Jacobiana(matrix<double> xx){
 matrix<double> NewtonRaphson(matrix<double> xx, matrix<double> Jac, double eps){
     // Comprobamos que la matriz Jacobiana calculada no es singular.
     if (abs(Jac.det())<=eps){
-        cout<<"La matriz Jacobiana es singular. No podemos calcular su derivada.";
+        cout<<"La matriz Jacobiana es singular. No podemos calcular su inversa.";
     } else {
         matrix<double> new_xx(3,1); new_xx.null();
         double norma = 0.0;
@@ -103,6 +102,7 @@ int main(){
     cout<<f;
     cout<<endl;
 
+    // Calculamos el error cometido para el cálculo de cada una de las variables solución.
     matrix <double> error(3,1); error.null();
     error = error - f;
     cout<<"El error cometido para cada variable (x, y, z) es:"<<endl;

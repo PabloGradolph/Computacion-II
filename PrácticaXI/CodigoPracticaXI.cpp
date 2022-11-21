@@ -50,6 +50,7 @@ double MaxEncimaDiagonal(matrix<double> A){
     return maximo;
 }
 
+// Función que devuelve true o false en función de si la función es cuadrada y simétrica o no.
 bool CuadradaSimetrica(matrix<double> A, double tol){
     // Tamaño de A.
     int acols = 0, arows = 0;
@@ -217,7 +218,7 @@ bool comprobaciones(matrix<double> A, matrix<double> U, matrix<double> Diagonali
     double autovalor = 0.0;
     matrix<double> autovector; matrix<double> comprobaciones;
     // Recorremos la matriz U por columnas.
-    // Y hacemos la operacion A*v - lambda*v = 0
+    // Y hacemos la operacion A*v - lambda*v = 0.
     for (int j=0; j<urows; j++){
         for (int i=0; i<ucols; i++){
             autovector(i,j) = U(i,j);
@@ -258,9 +259,9 @@ int main(){
 
         // Comprobación de los autovalores y autovectores.
         bool comprobacion = false;
-        comprobacion = comprobaciones(A, U, Diagonalizada, 0.000000001);
+        comprobacion = comprobaciones(A, U, Diagonalizada, tol);
         if (comprobacion == false){
-            cout<<"Los autovalores o los autovectores no son corrector."<<endl;
+            cout<<"Los autovalores o los autovectores no son correctos."<<endl;
             cout<<"Revise el procedimiento"<<endl;
         } else {
             if (iteraciones != 0){

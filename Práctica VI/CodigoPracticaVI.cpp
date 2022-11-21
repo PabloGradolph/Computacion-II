@@ -13,14 +13,14 @@ using namespace std;
 // Función f(x).
 double Funcion(double PuntoX){
     double resultado;
-    resultado = pow(1/PuntoX, 6) - exp(-PuntoX);
+    resultado = pow(1/PuntoX, 6) - (exp(-PuntoX));
     return resultado;
 }
 
 // Función derivada de f(x).
 double FuncionDerivada(double PuntoX){
     double resultado;
-    resultado = -6 * (1/pow(PuntoX, 2)) + exp(-PuntoX);
+    resultado = -6 * (1/pow(PuntoX, 7)) + (exp(-PuntoX));
     return resultado;
 }
 
@@ -145,17 +145,17 @@ int main(){
 
     // Llamamos a la función bisección1 que es la que imprime por pantalla.
     cout<<"MÉTODO BISECCIÓN:"<<endl;
-    nb = Biseccion1(PuntoX1, PuntoX2, tol, 1);
+    nb = Biseccion1(PuntoX1, PuntoX2, tol, 0);
 
     // Llamamos a la función secante1 que es la que imprime por pantalla.
     cout<<endl;
     cout<<"MÉTODO SECANTE:"<<endl;
-    ns = Secante1(PuntoS0, PuntoS1, tol, 1);
+    ns = Secante1(PuntoS0, PuntoS1, tol, 0);
 
     // Llamamos a la función Newton1 que es la que imprime por pantalla.
     cout<<endl;
     cout<<"MÉTODO NEWTON:"<<endl;
-    nn = Newton1(PuntoX1, tol, 1);
+    nn = Newton1(PuntoX1, tol, 0);
     
     // Guardamos en el fichero iteraciones.
     // Para ello utilizamos las funciones con número 2 que no imprimen por pantalla.
@@ -165,12 +165,13 @@ int main(){
         ff << "#ITERACIONES\n";
         ff << "eps\t\tnb\t\tns\t\tnn\n";
         for (int i = 3; i <= 12; i++){
-            nb = Biseccion2(PuntoX1, PuntoX2, tol, 1);
-            ns = Secante2(PuntoS0, PuntoS1, tol, 1);
-            nn = Newton2(PuntoX1, tol, 1);
+            nb = Biseccion2(PuntoX1, PuntoX2, tol, 0);
+            ns = Secante2(PuntoS0, PuntoS1, tol, 0);
+            nn = Newton2(PuntoX1, tol, 0);
             ff << tol << "\t\t" << nb << "\t\t" << ns << "\t\t" << nn <<endl;
             tol = tol/10;
         }
     }
+    
     return 0;
 }
