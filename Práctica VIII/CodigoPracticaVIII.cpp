@@ -131,6 +131,7 @@ matrix<double> MetodoJacobi(matrix<double> A, matrix<double> B){
             break;
         // Sino seguimos iterando.
         } else {
+            cout<<normaMaxima<<endl;
             continue;
         }
     }

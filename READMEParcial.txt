@@ -60,12 +60,13 @@ Documento de ayuda para el primer parcial:
                 es correcto o está dentro de una tolerancia. Cuando esto ocurra terminarán las iteraciones.
             
             · MetodoJacobi: Función que calcula la solución de un sistema de ecuaciones lineales mediante el método iterativo de Jacobi.
-                Hay que cambiar los valores de la solución exacta del sistema para que el proceso pare en algún momento.
+                Hay que cambiar los valores de la solución exacta del sistema para que el proceso pare en algún momento, así como el de 
+                la tolerancia.
             
             · MetodoGauss: Función que calcula la solución de un sistema de ecuaciones lineales mediante el método iterativo de Gauss.
                 Hay que cambiar los valores de la solución exacta del sistema para que el proceso pare en algún momento.
                 También hay que cambiar el valor de if(i<4) en el bucle while en función del tamaño de las matrices. Probablemente nos darán 
-                otro tamaño, por ejemplo 3, y habría que poner if(i<3).
+                otro tamaño, por ejemplo 3, y habría que poner if(i<3). También puede ser necesario cambiar el valor de la tolerancia.
             
             · main(): En el main se leen las matrices A y B de los ficheros correspondientes, se comprueba que la matriz A sea diagonal dominante,
                 se calculan e imprimen los resultados por ambos métodos y te avisa si hay algún error, fuera de la tolerancia (aunque es imposible
