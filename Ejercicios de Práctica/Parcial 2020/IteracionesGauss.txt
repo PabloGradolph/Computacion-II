@@ -1,0 +1,12 @@
+#ITERACIONES GAUSS PARA CIERTA TOLERANCIA
+eps		iteraciones
+0.001		7
+0.0001		8
+1e-05		9
+1e-06		10
+1e-07		11
+1e-08		12
+1e-09		14
+1e-10		15
+1e-11		16
+1e-12		17

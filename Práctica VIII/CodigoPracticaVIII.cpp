@@ -67,7 +67,7 @@ double NormaMaximaMatriz(matrix<double> A){
         for (int j=0; j<acols; j++){
             sumatorio = sumatorio + fabs(A(i,j));
         }
-        if (sumatorio>fila_anterior){
+        if (sumatorio>maximo){
             maximo = sumatorio;
         }
     }
@@ -76,65 +76,47 @@ double NormaMaximaMatriz(matrix<double> A){
 }
 
 // Función que calcula la solución de un sistema de ecuaciones lineales mediante el método iterativo de Jacobi.
-matrix<double> MetodoJacobi(matrix<double> A, matrix<double> B){
+matrix<double> MetodoJacobi(matrix<double> inA, matrix<double> inB, double tol){
     // Inicializamos las iteraciones a 0 y calculamos el tamaño de las matrices pasadas como argumento.
     // Pasamos la matriz de coeficientes y la matriz solución del sistema.
     int iteraciones = 0;
     int arows = 0, acols = 0, brows = 0, bcols = 0;
-    arows = A.rowno();
-    acols = A.colno();
-    brows = B.rowno();
-    bcols = B.colno();
+    arows = inA.rowno();
+    acols = inA.colno();
+    brows = inB.rowno();
+    bcols = inB.colno();
+
+    matrix<double> A(arows,acols); A=inA;
+    matrix<double> B(brows,bcols); B=inB;
 
     // Tres matrices que iremos usando durante las iteraciones.
     matrix<double> old_x(brows, bcols); old_x.null();
     matrix<double> new_x(brows, bcols); new_x.null();
-    matrix<double> new_A(arows, acols); new_A.null();
 
     // Calculamos las matrices de coeficientes
     for (int i=0; i<arows; i++){
-        B(i,0) = B(i,0)/A(i,i);
-        for(int j=0; j<acols; j++){
-            if(i!=j){
-                new_A(i,j) = -A(i,j)/A(i,i);
-            } else {
-                new_A(i,j) = 0;
-            }
-        }
+        old_x(i,0) = B(i,0)/A(i,i);
+        new_x(i,0) = old_x(i,0);
     }
 
-    // Definimos la matriz solución exacta.
-    matrix<double> solucion(brows, bcols); solucion.null();
-    solucion(0,0) = -0.2568; solucion(1,0) = -1.0236;
-    solucion(2,0) = 0.4527; solucion(3,0) = 0.1014;
+    // Iteraciones
+    do{
+        for (int i=0; i<arows; i++){
+            old_x(i,0) = new_x(i,0);
+        }
 
-    // Definimos la que será la matriz convergencia (resta entre nuestra solución y la exacta)
-    matrix<double> convergencia(brows, bcols); convergencia.null();
+        for (int i=0; i<arows; ++i){
+            new_x(i,0)=B(i,0)/A(i,i);
+      	    for (int j=0; j<acols; ++j){
+      	        if (j != i){
+                    new_x(i,0) = new_x(i,0) - (A(i,j)/A(i,i))*old_x(j,0) ;
+                } 
+      	    }
+        }
 
-    // Definimos la tolerancia y el valor que tomará la norma máxima de la matriz convergencia.
-    // Con la tolerancia más pequeña el programa tarda demasiado. Es por esto por lo que pongo 10^-4 de tolerancia.
-    double tol = 0.0001, normaMaxima = 0.0;
-
-    // Primera iteración
-    old_x = B;
-    iteraciones = 1;
-
-    // Resto de iteraciones
-    while (true){
-        new_x = B + (new_A*old_x);
-        old_x = new_x;
         iteraciones++;
-        convergencia = solucion - new_x;
-        normaMaxima = NormaMaximaMatriz(convergencia);
-        // Si la norma máxima es menor que la tolerancia continuamos
-        if (normaMaxima<=tol){
-            break;
-        // Sino seguimos iterando.
-        } else {
-            cout<<normaMaxima<<endl;
-            continue;
-        }
-    }
+        cout<< "new_x(" << iteraciones <<")= " << ~new_x << endl;
+    } while(NormaMaximaMatriz(inA*new_x-inB)>tol);
 
     // Por el método de Jacobi se hacen estas iteraciones.
     cout<<"Método de Jacobi:"<<endl;
@@ -145,63 +127,46 @@ matrix<double> MetodoJacobi(matrix<double> A, matrix<double> B){
 }
 
 // Función que calcula la solución de un sistema de ecuaciones lineales mediante el método iterativo de Gauss-Seidel.
-matrix<double> MetodoGauss(matrix<double> A, matrix<double> B){
+matrix<double> MetodoGauss(matrix<double> inA, matrix<double> inB, double tol){
     // Inicializamos las iteraciones a 0 y calculamos el tamaño de las matrices pasadas como argumento.
     // Pasamos la matriz de coeficientes y la matriz solución del sistema.
     int iteraciones = 0;
     int arows = 0, acols = 0, brows = 0, bcols = 0;
-    arows = A.rowno();
-    acols = A.colno();
-    brows = B.rowno();
-    bcols = B.colno();
+    arows = inA.rowno();
+    acols = inA.colno();
+    brows = inB.rowno();
+    bcols = inB.colno();
+
+    matrix<double> A(arows,acols); A=inA;
+    matrix<double> B(brows,bcols); B=inB;
 
     // Tres matrices que iremos usando durante las iteraciones.
     matrix<double> old_x(brows, bcols); old_x.null();
     matrix<double> new_x(brows, bcols); new_x.null();
-    matrix<double> new_A(arows, acols); new_A.null();
 
-    // Calculamos las matrices de coeficientes.
+    // Calculamos las matrices de coeficientes
     for (int i=0; i<arows; i++){
-        B(i,0) = B(i,0)/A(i,i);
-        for(int j=0; j<acols; j++){
-            if(i!=j){
-                new_A(i,j) = -A(i,j)/A(i,i);
-            } else {
-                new_A(i,j) = 0;
-            }
-        }
+        old_x(i,0) = B(i,0)/A(i,i);
+        new_x(i,0) = old_x(i,0);
     }
 
-    // Definimos la matriz solución exacta.
-    matrix<double> solucion(brows, bcols); solucion.null();
-    solucion(0,0) = -0.2568; solucion(1,0) = -1.0236;
-    solucion(2,0) = 0.4527; solucion(3,0) = 0.1014;
+    do{
+        for (int i=0; i<arows; i++){
+            old_x(i,0) = new_x(i,0);
+        }
 
-    // Definimos la que será la matriz convergencia (resta entre nuestra solución y la exacta)
-    matrix<double> convergencia(brows, bcols); convergencia.null();
-
-    // Definimos la tolerancia y el valor que tomará la norma máxima de la matriz convergencia.
-    // Con la tolerancia más pequeña el programa tarda demasiado. Es por esto por lo que pongo 10^-4 de tolerancia.
-    double tol = 0.0001, normaMaxima = 0.0;
-
-    int i = 0;
-    while (true){
-        new_x(i,0) = B(i,0) + (new_A*old_x)(i,0);
-        old_x(i,0) = new_x(i,0);
-        if (i<4){
-            i++;
-        } else {
-            i = 0;
-            iteraciones++;
-            convergencia = solucion - new_x;
-            normaMaxima = NormaMaximaMatriz(convergencia);
-            if (normaMaxima<=tol){
-                break;
-            } else {
-                continue;
+        for (int i=0; i<arows; i++){
+            new_x(i,0) = B(i,0)/A(i,i);
+            for (int j=0; j<acols; j++){
+                if (j!=i){
+                    new_x(i,0) = new_x(i,0) - (A(i,j)/A(i,i))*new_x(j,0);
+                }
             }
         }
-    }
+
+        iteraciones++;
+        cout<<"new_x(" << iteraciones << ")= " << ~new_x << endl;
+    } while(NormaMaximaMatriz(inA*new_x-inB)>tol);
 
     // Por el método de Gauss-Seidel se hacen estas iteraciones.
     cout<<"Método de Gauss-Seidel:"<<endl;
@@ -247,32 +212,17 @@ int main(){
             cout<<endl;
             
             // Calculamos e imprimimos los resultados para el método de Jacobi.
+            double tol = 0.000001;
             matrix<double> X(brows, bcols);
-            X = MetodoJacobi(A, B);
+            X = MetodoJacobi(A, B, tol);
             cout<<"Matriz solución tras ese número de iteraciones: "<<endl<<X;
             cout<<endl;
-
-            // Comprobamos que nuestro resultado es correcto para una cierta tolerancia.
-            double tol = 0.001, max = 0.0;
-            matrix<double> Sol; Sol.null();
-            Sol = A*X-B; max = NormaMaximaMatriz(Sol);
-            if (max > tol){
-                cout<<endl;
-                cout<<"Tras la comprobación A*X-B = 0, hay algún valor de la matriz que no está por debajo de la tolerancia."<<endl;
-            }
 
             // Lo mismo para el método de Gauss.
-            X = MetodoGauss(A, B);
+            X = MetodoGauss(A, B, tol);
             cout<<"Matriz solución tras ese número de iteraciones: "<<endl<<X;
             cout<<endl;
 
-            // Comprobamos que nuestro resultado es correcto para una cierta tolerancia.
-            max = 0.0;
-            Sol = A*X-B; max = NormaMaximaMatriz(Sol);
-            if (max > tol){
-                cout<<endl;
-                cout<<"Tras la comprobación A*X-B = 0, hay algún valor de la matriz que no está por debajo de la tolerancia."<<endl;
-            }
         }
     }
 

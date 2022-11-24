@@ -1,0 +1,12 @@
+#ITERACIONES JACOBI PARA CIERTA TOLERANCIA
+eps		iteraciones
+0.001		15
+0.0001		19
+1e-05		22
+1e-06		25
+1e-07		29
+1e-08		32
+1e-09		34
+1e-10		38
+1e-11		42
+1e-12		45
