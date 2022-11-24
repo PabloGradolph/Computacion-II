@@ -1,3 +1,7 @@
+// Resolución de ecuaciones diferenciales.
+// Por el método de Euler.
+// La solución obtenida son tablas de valores numéricos.
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -40,7 +44,7 @@ double SolExacta(double x){
 }
 
 double Euler(double h, double xmin, double xmax, double y0){
-    double npasos = 0.0, new_x = 0.0, x = 0.0, y = y0;
+    double npasos = 0.0, x = 0.0, y = y0;
     npasos = (xmax - xmin)/h;
 
     string filend = fname(xmin,xmax,h);
