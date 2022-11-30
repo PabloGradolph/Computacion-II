@@ -43,10 +43,13 @@ double SolExacta(double x){
     return Sol;
 }
 
+// Función para la resolución de una ecuación diferencial por el método de Euler.
 double Euler(double h, double xmin, double xmax, double y0){
+    // Definimos el número de pasos e inicializamos x e y.
     double npasos = 0.0, x = 0.0, y = y0;
     npasos = (xmax - xmin)/h;
 
+    // Generamos un fichero donde guardar el resultado con la función anterior.
     string filend = fname(xmin,xmax,h);
     ofstream ff(filend);
     if (ff.is_open()){
@@ -54,6 +57,7 @@ double Euler(double h, double xmin, double xmax, double y0){
         ff << "X\tY" << endl;
         ff << xmin << " " << y0 << endl;
         for (int i=1; i<=npasos; i++){
+            // Ecuaciones del método de Euler.
             x = xmin + i*h;
             y = y + h*FuncionYPrima(x, y);
             ff << x << " " << y << endl; 
@@ -64,16 +68,21 @@ double Euler(double h, double xmin, double xmax, double y0){
 }
 
 int main(){
+    // Definimos los datos para nuestro problema en particular.
     int hlen = 3;
     double h[hlen] = {0.5, 0.1, 0.02}, Sol = 0.0;
     double xmin = 0.5, xmax = 1.0, y0 = 0.0;
 
+    // Llamamos a la función 3 veces, una por cada h.
     for (int i=0; i<hlen; i++){
         Euler(h[i], xmin, xmax, y0);
     }
 
+    // Comparamos los resultados obtenidos con la solución exacta.
     Sol = SolExacta(1.0);
     cout<<Sol;
+
+    // La comparación gráfica se puede ver en la foto  GráficaEjercicio1.png
     
     return 0;
 }

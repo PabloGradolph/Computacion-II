@@ -12,6 +12,23 @@ using namespace std;
 #include <cmatrix>
 using namespace techsoft;
 
+// Función para generar nombres de ficheros.
+string fname(double xmin, double xmax, double h){
+  ostringstream oss; 
+  oss << setprecision(1) << xmin;
+  string fend = "_xmin"+oss.str(); 
+
+  oss.str(string());
+  oss << setprecision(1) << xmax;
+  fend = fend+"_xmax"+oss.str();
+
+  oss.str(string());
+  oss << setprecision(1) << h;
+  fend = fend+"_h"+oss.str()+".txt";
+
+  return fend;
+}
+
 // Función para la creación de nombres de ficheros de forma automática.
 string a2fname(double a2, double xmin, double xmax, double h){
   ostringstream oss;
@@ -46,6 +63,30 @@ double SolExacta(double x){
     return Sol;
 }
 
+double Euler(double h, double xmin, double xmax, double y0){
+    // Definimos el número de pasos e inicializamos x e y.
+    double npasos = 0.0, x = 0.0, y = y0;
+    npasos = (xmax - xmin)/h;
+
+    // Generamos un fichero donde guardar el resultado con la función anterior.
+    string filend = fname(xmin,xmax,h);
+    ofstream ff(filend);
+    if (ff.is_open()){
+        ff << "#DATOS PARA h=" << h << endl;
+        ff << "X\tY" << endl;
+        ff << xmin << " " << y0 << endl;
+        // QUITA EL +1 DEL BUCLE (NO DEBERÍA ESTAR PERO NO ITERA LA ÚLTIMA VEZ SINO)
+        for (int i=1; i<=npasos+1; i++){
+            // Ecuaciones del método de Euler.
+            x = xmin + i*h;
+            y = y + h*FuncionYPrima(x, y);
+            ff << /*x <<*/ " " << y << endl; 
+        }
+    }
+    
+    return npasos;
+}
+
 // Función para la resolución por el sistema Ronge-Kutta (segundo orden)
 // En función del valor del parámetro a2 se llama método de Heun, del punto medio o de Ralston.
 void RK2(double a2, double h, double xmin, double xmax, double y0){
@@ -74,7 +115,7 @@ void RK2(double a2, double h, double xmin, double xmax, double y0){
             y = y + h*(a1*k1 + a2*k2);
             k1 = FuncionYPrima(x, y);
             k2 = FuncionYPrima(x + p*h, y + q*k1*h);
-            ff << x << " " << y << endl; 
+            ff << /*x <<*/ " " << y << endl; 
         }
     }
 }
@@ -108,7 +149,7 @@ void RK4(double h, double xmin, double xmax, double y0){
             k2 = FuncionYPrima(x + 0.5*h, y + 0.5*k1*h);
             k3 = FuncionYPrima(x + 0.5*h, y + 0.5*k2*h);
             k4 = FuncionYPrima(x + h, y + k3*h);
-            ff << x << " " << y << endl; 
+            ff << /*x <<*/ " " << y << endl; 
         }
     }
 }
@@ -123,10 +164,15 @@ int main(){
     // Llamamos a la función para Ronge-Kutta de cuarto orden.
     RK4(h, xmin, xmax, y0);
 
+    // Llamamos a la función de Euler.
+    Euler(h, xmin, xmax, y0);
+
     // Comparamos con la solución exacta. Valores muy parecidos (mirar ficheros).
     double Sol = 0.0;
     Sol = SolExacta(xmin); cout<<Sol<<endl;
     Sol = SolExacta(xmax); cout<<Sol<<endl;
+
+    // La comparación gráfica se puede ver en la foto.
 
     return 0;
 }
