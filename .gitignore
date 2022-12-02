@@ -1,2 +1,5 @@
 # Ignora los archivos de ejecución
 *.exe
+
+# Ignora .vscode
+.vscode

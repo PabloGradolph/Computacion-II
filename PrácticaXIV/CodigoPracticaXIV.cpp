@@ -55,7 +55,7 @@ double Euler(double h, double xmin, double xmax, double y0){
     ofstream ff(filend);
     if (ff.is_open()){
         ff << "#DATOS PARA h=" << h << endl;
-        ff << "X\tY" << endl;
+        ff << "t\tv" << endl;
         ff << xmin << " " << y0 << endl;
         for (int i=1; i<=npasos; i++){
             // Ecuaciones del método de Euler.
