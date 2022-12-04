@@ -80,7 +80,7 @@ matrix<double> RK2Sistemas(int n, double a2, double h, double xmin, double xmax,
     return Y;
 }
 
-// Resolución de sistemas de ecuaciones diferenciales por el método de Ronge-Kutta(segundo orden).
+// Resolución de sistemas de ecuaciones diferenciales por el método de Ronge-Kutta(cuarto orden).
 matrix<double> RK4Sistemas(int n, double h, double xmin, double xmax, matrix<double> y0){
     // Definimos el número de pasos e inicializamos x.
     double npasos = 0.0, x = xmin;
