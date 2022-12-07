@@ -1,5 +1,6 @@
 // Código Práctica XVI 
-// Resolución de ecuaciones diferenciales de segundo orden con condiciones de contorno
+// Resolución de ecuaciones diferenciales de segundo orden con condiciones de contorno: 
+// Método del disparo
 // Autor: Pablo Gradolph Oliva
 // Fecha: 05/12/2022
 
@@ -13,6 +14,7 @@ using namespace std;
 #include <cmatrix>
 using namespace techsoft;
 
+// Solución exacta para comparar resultados al final.
 double uReal(double r){
     double u1 = 110.0, R1 = 5.0, R2 = 10.0;
     double u = 0.0;
@@ -51,7 +53,6 @@ matrix<double> RK4Sistemas(int n, double h, double rmin, double rmax, matrix<dou
     k2 = SistemaYPrima(r + 0.5*h, Y + 0.5*h*k1);
     k3 = SistemaYPrima(r + 0.5*h, Y + 0.5*h*k2);
     k4 = SistemaYPrima(r + h, Y + h*k3);
-    error = fabs(Y(0,0) - uReal(r));
 
     // Guardamos los valores en un fichero (calculando el resto de iteraciones).
     string file = "Pt16_RK4_1.txt";
@@ -59,17 +60,16 @@ matrix<double> RK4Sistemas(int n, double h, double rmin, double rmax, matrix<dou
     if (ff.is_open()){
         ff << setprecision(5);
         ff << "#DATOS PARA h=" << h << endl;
-        ff << "r\t\tu\t\terror" << endl;
-        ff << r << "    " << Y(0,0) << "    " << error << endl;
+        ff << "r\t\tu\t\tuReal\t\tu'" << endl;
+        ff << r << "    " << Y(0,0) << "    " << uReal(r) << "    " << Y(1,0) << endl;
         for (int i=1; i<=npasos; i++){
             Y = Y + 1/6. * h*(k1 + 2.*k2 + 2.*k3 + k4);
             r = r + h;
-            error = (Y(0,0) - uReal(r));
             k1 = SistemaYPrima(r, Y);
             k2 = SistemaYPrima(r + 0.5*h, Y + 0.5*h*k1);
             k3 = SistemaYPrima(r + 0.5*h, Y + 0.5*h*k2);
             k4 = SistemaYPrima(r + h, Y + h*k3);
-            ff << r << "    " << Y(0,0) << "    " << error << endl; 
+            ff << r << "    " << Y(0,0) << "    " << uReal(r) << "    " << Y(1,0) << endl; 
         }
     }
     
@@ -81,7 +81,7 @@ int main(){
     double h = 0.05;
     int n = 2;
     double rmin = 5.0, rmax = 10.0;
-    double tol = 10e-8;
+    double tol = 10e-8, errormax = 0.0;
 
     // Definimos la matriz inicial
     matrix<double> y0(n, 1); y0.null();
@@ -117,6 +117,9 @@ int main(){
         dua1 = dua2; dua2 = y0(1,0);
         
     }while(fabs(ub2 - uReal(10.0)) > tol);
+    
+    cout<<"El valor u(b) obtenido es: " << ub2 << endl;
+    cout<<"En el fichero 'Pt16_RK4_1.txt' se encuentran el resto de resultados."<<endl;
 
     return 0;
 }

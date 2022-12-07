@@ -3,3 +3,6 @@
 
 # Ignora .vscode
 .vscode
+
+# Ignora los .zip
+*.zip
