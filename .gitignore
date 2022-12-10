@@ -6,3 +6,6 @@
 
 # Ignora los .zip
 *.zip
+
+# Ignora excel
+*.xlsx
