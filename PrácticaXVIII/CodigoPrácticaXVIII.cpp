@@ -72,7 +72,7 @@ matrix<double> RK4Sistemas(int n, double h, double xmin, double xmax, matrix<dou
     k4 = SistemaYPrima(x + h, Y + h*k3);
 
     // Guardamos los valores en un fichero (calculando el resto de iteraciones).
-    string file = "Pt17_RK4.txt";
+    string file = "Pt18_RK4.txt";
     ofstream ff(file);
     if (ff.is_open()){
         ff << setprecision(5);
