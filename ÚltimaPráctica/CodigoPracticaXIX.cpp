@@ -215,7 +215,7 @@ int main(){
         matrix<double> u; u.null();
         
         // Bucle cambiando el incremento del tiempo para tener así diferentes valores de r.
-        for (double incrementoT=2; incrementoT<=4.5; incrementoT=incrementoT+0.5){
+        for (double incrementoT=0.1; incrementoT<=4.5; incrementoT=incrementoT+0.5){
             // Calculamos el valor de r
             r = (k*incrementoT)/(incrementoX*incrementoX);
             

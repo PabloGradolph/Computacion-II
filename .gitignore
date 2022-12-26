@@ -9,3 +9,6 @@
 
 # Ignora excel
 *.xlsx
+
+# Ignora geogebra
+*.ggb
