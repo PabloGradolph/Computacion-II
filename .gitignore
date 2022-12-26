@@ -12,3 +12,7 @@
 
 # Ignora geogebra
 *.ggb
+
+# Ignora fotos
+*.jpg
+*.png
