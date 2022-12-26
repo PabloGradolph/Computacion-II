@@ -16,3 +16,6 @@
 # Ignora fotos
 *.jpg
 *.png
+
+# Ignora word
+*.docx
