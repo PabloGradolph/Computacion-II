@@ -8,7 +8,7 @@ using namespace std;
 // Función que calcula los radianes en función de los grados pasado como argumento.
 double Radianes(double grados){
     double rad = 0.0;
-    rad = grados * (M_PI/180);
+    rad = grados * (M_PI/180.);
     return rad;
 }
 
@@ -16,7 +16,7 @@ double Radianes(double grados){
 double Funcion(double valorTH, double valorFi){
     // Definimos K (necesario en nuestro caso)
     double k = 0.0;
-    k = sin(valorTH/2);
+    k = sin(valorTH/2.);
 
     // Definimos la función
     double funcion = 0.0;
@@ -30,7 +30,7 @@ double Funcion(double valorTH, double valorFi){
 double FuncionCG(double b, double a, double valorTH, double valorFi){
     // Definimos K (necesario en nuestro caso)
     double k = 0.0;
-    k = sin(valorTH/2);
+    k = sin(valorTH/2.);
 
     // Definimos la función
     double funcion = 0.0;

@@ -112,7 +112,7 @@ void RK2(double a2, double h, double xmin, double xmax, double y0){
         ff << xmin << " " << y << endl;
         for (int i=1; i<=npasos+1; i++){
             x = xmin + i*h;
-            y = y + h*(a1*k1 + a2*k2);
+            y = y + (a1*k1 + a2*k2)*h;
             k1 = FuncionYPrima(x, y);
             k2 = FuncionYPrima(x + p*h, y + q*k1*h);
             ff << /*x <<*/ " " << y << endl; 
