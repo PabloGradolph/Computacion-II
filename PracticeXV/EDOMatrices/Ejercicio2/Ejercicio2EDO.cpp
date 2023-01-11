@@ -108,7 +108,7 @@ matrix<double> RK4Sistemas(int n, double h, double xmin, double xmax, matrix<dou
         ff << "X\tY1\tY2" << endl;
         ff << x << "\t" << Y(0,0) << "\t" << Y(1,0) << endl;
         for (int i=1; i<=npasos; i++){
-            Y = Y + 1/6. * h*(k1 + 2.*k2 + 2.*k3 + k4);
+            Y = Y + 1/6. * (k1 + 2.*k2 + 2.*k3 + k4) * h;
             x = x + h;
             k1 = SistemaYPrima(x, Y);
             k2 = SistemaYPrima(x + 0.5*h, Y + 0.5*h*k1);

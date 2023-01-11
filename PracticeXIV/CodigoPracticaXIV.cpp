@@ -13,9 +13,6 @@
 #include <iomanip>
 using namespace std;
 
-#include <cmatrix>
-using namespace techsoft;
-
 // Definimos gamma global
 double g = 9.8, vlim = 57.0;
 double gamma = g/(vlim*vlim);
@@ -63,6 +60,8 @@ void Euler(double h, double xmin, double y0, double tol){
             ff << x << " " << y << endl; 
         } while(57.0-y > tol);
     }
+
+    cout<<"Fichero de salida: "<<filend<<endl;
 }
 
 int main(){

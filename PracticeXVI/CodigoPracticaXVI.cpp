@@ -63,7 +63,7 @@ matrix<double> RK4Sistemas(int n, double h, double rmin, double rmax, matrix<dou
         ff << "r\t\tu\t\tuReal\t\tu'" << endl;
         ff << r << "    " << Y(0,0) << "    " << uReal(r) << "    " << Y(1,0) << endl;
         for (int i=1; i<=npasos; i++){
-            Y = Y + 1/6. * h*(k1 + 2.*k2 + 2.*k3 + k4);
+            Y = Y + 1/6. * (k1 + 2.*k2 + 2.*k3 + k4) * h;
             r = r + h;
             k1 = SistemaYPrima(r, Y);
             k2 = SistemaYPrima(r + 0.5*h, Y + 0.5*h*k1);

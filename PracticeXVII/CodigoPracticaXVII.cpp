@@ -425,9 +425,3 @@ int main(){
 
     return 0;
 }
-
-// LO QUE TE FALTA POR HACER:
-// Calcular errores y añadirlos a los ficheros.
-// INFORME:
-//    - Tienes que hacer las gráficas (meter en la misma los distintos h con método del disparo y uReal)
-//    - Gráfica también de los errores.

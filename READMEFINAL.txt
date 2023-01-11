@@ -44,5 +44,58 @@ Documento informativo para la parte práctica del examen final de enero:
         - La FuncionYPrima para nuestro caso en particular.
         - Luego tendríamos que cambiar los datos del problema: xmin, xmax, h, tolerancia, la condición inicial...
 
-- Práctica XV: Resolución de ecuaciones diferenciales de orden n con condiciones iniciales. Transformando a sistmeas. Encontramos los siguiente:
+- Práctica XV: Resolución de ecuaciones diferenciales de orden n con condiciones iniciales. Transformando estas a sistmeas. Encontramos los siguiente:
+    EDOMatrices:
+        · Ejercicio1: Encontramos la función para resolver sistemas de ecuaciones diferenciales de orden 1 por Euler.
+        · Ejercicio2: Encontramos las funciones para resolver sistemas de ecuaciones diferenciales de orden 1 por RK2 y RK4.
+        TENER EN CUENTA QUE SON PARA UN XMAX.
+    En la práctica:
+        · SistemaYPrima: Devuelve el valor del sistema en forma de matriz para el caso concreto del enunciado de la práctica.
+        · Encontramos las tres funciones vistas anteriormente EulerSistemas, RK2Sistemas y RK4Sistemas.
 
+    --- COSAS QUE HABRÍA QUE CAMBIAR ---
+        - Ver si necesitamos xmax y por tanto calcular npasos o cambiamos a un do while hasta cierta tolerancia como en la práctica anterior (Comentado).
+        - Los nombres de los ficheros.
+        - Los datos h, n(tamaño matrices), tmin, tmax, (o xmin/xmax), a2 si usas RK2 por otro método.
+        - Las condiciones iniciales (y0).
+        - Añadir tolerancia si se hace por do while.
+
+- Práctica XVI: Resolución de ecuaciones diferenciales de segundo orden con condiciones de contorno: Método del disparo. Encontramos:
+    · uReal: Función que devuelve la solución analítica del problema planteado.
+    · SistemaYPrima: Devuelve el valor de la matriz sistema de nuestro caso. (Una vez transformado).
+    · RK4Sistemas: Método de Ronge-Kutta de cuarto orden para sistemas de ecuaciones diferenciales de primer orden. 
+    · main(): Datos iniciales, primera y segunda suposición del método, interpolación hasta que el resultado real menos el nuestro esté por debajo de una tolerancia.
+
+    --- COSAS QUE HABRÍA QUE CAMBIAR ---
+        - Los valores iniciales para nuestro problema en particular: h, n(número de ecuaciones del sistema), rmin, rmax, tol y condición inicial (tras la primera suposición).
+        - La función uReal (tiene que ser específica de cada problema).
+        - La función SistemaYPrima (tiene que ser específica de cada problema).
+        - Como ya haces el while en el main creo que no es necesario, pero igual tienes que cambiar la función del método de RK4, cambiando el for por un while hasta cierta condición.
+
+- Práctica XVII: Resolución de ecuaciones diferenciales de segundo orden con condiciones de contorno: Método del las diferencias finitas. Encontramos:
+    · uReal: Función que devuelve la solución analítica del problema planteado.
+    · polP: Función que devuelve el polinomio p(x) para nuestro caso.
+    · polQ: Función que devuelve el polinomio q(x) para nuestro caso.
+    · polR: Función que devuelve el polinomio r(x) para nuestro caso.
+    · ResultadoCorrecto: Función que retorn true o false en función de si la solución X del sistema A*X = B es correcta.
+        Para ello calcula A*X - B y tiene que estar muy cercano a cero en función de una tolerancia.
+    · Cuadrada: Función para comprobar si la matriz es cuadrada.
+    · FilasColumnas: Función que devuelve true o false en función de si el número de columnas de A es igual al número de filas de B.
+    · Tridiagonal: Función que retorna true o false en función de si la matriz pasada como argumento es tridiagonal o no.
+    · LuTridiagonal: Función que ejecuta el método LU para el caso donde la matriz A pasada como argumento es tridiagonal.
+    · EDODiferenciasFinitas: Función que calcula la matriz solución del sistema aplicando DiferneciasFinitas para llegar a un sistema de ecuaciones
+        y, posteriormente, calcular su resultado medianete el método LuTridiagonal.
+    · main(): Se definen las variables iniciales, se calcula el número de pasos que hay que dar, se guardan los resultados en un fichero, calculando a su vez 
+        los errores cometidos. Este proceso se repite 3 veces para 3 valores de h distintos en nuestro caso.
+    
+    --- COSAS QUE HABRÍA QUE CAMBIAR ---
+        - La función uReal (tiene que ser específica de cada problema).
+        - Los polinomios p, q y r, se tienen que ajustar a nuestro problema. En nuestro caso q y r eran iguales a 0.
+        - Los valores iniciales de nuestro problema: h, rmin, rmax, las condiciones de contorno...
+        - Los nombres de los ficheros de salida si fuese necesario.
+    
+- Práctica XVIII: Caso específico de resolución de ecuaciones diferenciales: El movimiento del péndulo de Foucault.
+
+    La diferencia con el resto de prácticas anteriores es que aquí se pide hallar el valor de h necesario para que la precisión de la solución esté por debajo
+    de cierta tolerancia. Para ello hemos creado un bucle do while en el main del programa que compara una solución obtenida con la anterior hasta que la diferencia
+    entre estas esté por debajo de la tolerancia. De esta forma sacamos el valor de h, que se va multiplicando por 0.5 en cada iteración.

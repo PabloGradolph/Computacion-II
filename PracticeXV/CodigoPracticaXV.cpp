@@ -58,7 +58,7 @@ matrix<double> RK4Sistemas(int n, double h, double tmin, double tmax, matrix<dou
         ff << "t\t\tY1\t\tY2\t\tV1\t\tV2" << endl;
         ff << t << "\t\t" << Y(0,0) << "\t\t" << Y(1,0) << "\t\t" << Y(2,0) << "\t\t" << Y(3,0) << endl;
         for (int i=1; i<=npasos; i++){
-            Y = Y + 1/6. * h*(k1 + 2.*k2 + 2.*k3 + k4);
+            Y = Y + 1/6. * (k1 + 2.*k2 + 2.*k3 + k4) * h;
             t = t + h;
             k1 = SistemaYPrima(t, Y);
             k2 = SistemaYPrima(t + 0.5*h, Y + 0.5*h*k1);
@@ -66,6 +66,18 @@ matrix<double> RK4Sistemas(int n, double h, double tmin, double tmax, matrix<dou
             k4 = SistemaYPrima(t + h, Y + h*k3);
             ff << t << "\t\t" << Y(0,0) << "\t\t" << Y(1,0) << "\t\t" << Y(2,0) << "\t\t" << Y(3,0) << endl; 
         }
+
+        // Por el método de while:
+        //
+        // do{
+        //    Y = Y + 1/6. * h*(k1 + 2.*k2 + 2.*k3 + k4);
+        //    t = t + h;
+        //    k1 = SistemaYPrima(t, Y);
+        //    k2 = SistemaYPrima(t + 0.5*h, Y + 0.5*h*k1);
+        //    k3 = SistemaYPrima(t + 0.5*h, Y + 0.5*h*k2);
+        //    k4 = SistemaYPrima(t + h, Y + h*k3);
+        //    ff << t << "\t\t" << Y(0,0) << "\t\t" << Y(1,0) << "\t\t" << Y(2,0) << "\t\t" << Y(3,0) << endl; 
+        // } while (NormaMaxima(MatrizFinal-Y>tol));
     }
     
     return Y;
@@ -93,6 +105,15 @@ matrix<double> EulerSistemas(int n, double h, double tmin, double tmax, matrix<d
             t = t + h;
             ff << t << "\t\t" << Y(0,0) << "\t\t" << Y(1,0) << "\t\t" << Y(2,0) << "\t\t" << Y(3,0) << endl; 
         }
+
+        // Por el método de while:
+        //
+        // do{
+        //     Y = Y + h*SistemaYPrima(t, Y);
+        //     t = t + h;
+        //     ff << t << "\t\t" << Y(0,0) << "\t\t" << Y(1,0) << "\t\t" << Y(2,0) << "\t\t" << Y(3,0) << endl; 
+        // } while (NormaMaxima(MatrizFinal-Y>tol));
+        //
     }
     
     return Y;
@@ -132,6 +153,17 @@ matrix<double> RK2Sistemas(int n, double a2, double h, double tmin, double tmax,
             k2 = SistemaYPrima(t+p*h, Y+q*h*k1);
             ff << t << "\t\t" << Y(0,0) << "\t\t" << Y(1,0) << "\t\t" << Y(2,0) << "\t\t" << Y(3,0) << endl; 
         }
+
+        // Por el método de while:
+        //
+        // do{
+        //     Y = Y + (((a1*k1) + (a2*k2))*h);
+        //     t = t + h;
+        //     k1 = SistemaYPrima(t, Y);
+        //     k2 = SistemaYPrima(t+p*h, Y+q*h*k1);
+        //     ff << t << "\t\t" << Y(0,0) << "\t\t" << Y(1,0) << "\t\t" << Y(2,0) << "\t\t" << Y(3,0) << endl;  
+        // } while (NormaMaxima(MatrizFinal-Y>tol));
+        //
     }
 
     return Y;
