@@ -62,6 +62,14 @@ double Trapezoidal(int n, double a, double b, double TH){
 
 // Función que calcula la integral por la regla de Simpson 1/3 n es par.
 double Simpson(int n, double a, double b, double TH){
+
+    // Control de errores en la entrada de n
+    if (n%2!=0){
+        cout<<"El valor n introducido es impar: n = "<<n<<endl;
+        cout<<"No se puede seguir el método Simpson 1/3"<<endl;
+        return n;
+    }
+
     // Calculamos h
     double h = 0.0;
     h = (b - a)/n;
@@ -74,9 +82,9 @@ double Simpson(int n, double a, double b, double TH){
         } else if (i==n){
             sumatorio = sumatorio + Funcion(TH, Fi);
         } else if (i%2==0){
-            sumatorio = sumatorio + (4*Funcion(TH, Fi));
-        } else if (i%2!=0){
             sumatorio = sumatorio + (2*Funcion(TH, Fi));
+        } else if (i%2!=0){
+            sumatorio = sumatorio + (4*Funcion(TH, Fi));
         } Fi = Fi + h;
     }
 
@@ -87,8 +95,50 @@ double Simpson(int n, double a, double b, double TH){
     return I;
 }
 
+// Función que calcula la integeral por la regla de Simpson 3/8 (cuando n es impar).
+double Simpson38(int n, double a, double b, double TH){
+
+    // Control de errores en la entrada de n
+    if (n%2==0){
+        cout<<"El valor n introducido es par: n = "<<n<<endl;
+        cout<<"No se puede seguir el método Simpson 3/8"<<endl;
+        return n;
+    }
+
+    // Calculamos h
+    double h = 0.0;
+    h = (b - a)/n;
+
+    // Calculamos la parte f(x0) + 3f(x1) + 3f(x2) + 2f(x3) + 3f(x4) + 3f(x5) + 2f(x6) + ... + f(xn).
+    double Fi = 0.0, sumatorio = 0.0;
+    for (int i=0; i<=n; i++){
+        if (i==0){
+            sumatorio = sumatorio + Funcion(TH, Fi);
+        } else if (i==n){
+            sumatorio = sumatorio + Funcion(TH, Fi);
+        } else if (i%3==0){
+            sumatorio = sumatorio + (2*Funcion(TH, Fi));
+        } else if (i%3!=0){
+            sumatorio = sumatorio + (3*Funcion(TH, Fi));
+        } Fi = Fi + h;
+    }
+
+    // Calculamos la integral de la función con la regla de Simpson 3/8 compuesta.
+    double I = 0.0;
+    I = (3*h/8) * sumatorio;
+
+    return I;
+}
+
 double CuadraturaGaussiana(int n, double a, double b, double TH){
     
+    // Control de errores en la entrada de n
+    if (n<1 || n>5){
+        cout<<"Error en la entrada de n: n = "<<n<<endl;
+        cout<<"No se puede seguir el método de la cuadratura gaussiana"<<endl;
+        return n;
+    }
+
     // Calculamos la integral para los 5 posibles casos (hasta 5 puntos)
     double I = 0.0;
     double wi = 0.0;
@@ -177,7 +227,7 @@ int main(){
         ffile << "Theta    Trapecio(4)    Trapecio(20)    Simpson(4)    Simpson(20)    Cuadratura(2)    Cuadratura(5)" << endl;
         
         // Definimos, calculamos e insertamos los datos en el fichero.
-        ffile << setprecision(4);
+        ffile << setprecision(6);
         double theta = 0.0, I1 = 0.0, I2 = 0.0, I3 = 0.0, I4 = 0.0, I5 = 0.0, I6 = 0.0;
         for (int TH=0; TH<=100; TH=TH+5){
             theta = Radianes(TH);

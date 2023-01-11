@@ -22,11 +22,18 @@ Documento informativo para la parte práctica del examen final de enero:
     · Radianes: Función que calcula los radianes en función de los grados pasado como argumento.
     · Funcion: Función que devuelve el valor de la función que usamos en nuestro caso. La función en este caso depende de Theta y Fi.
     · FuncionCG: Función que devuelve la función con cambio de variable que necesitamos para calcular la Cuadratura Gaussiana.
-    . 
+    · Trapezoidal: Función que calcula la integral por la regla trapezoidal.
+    · Simpson: Función que calcula la integral por la regla de Simpson 1/3 (cuando n es par).
+    · Simpson38: Función que calcula la integeral por la regla de Simpson 3/8 (cuando n es impar).
+    · CuadraturaGaussiana: Función que calcula la integral por la cuadratura Gaussiana, siguiendo la teoría y dependiendo del valor de n que puede variar entre 1 y 5.
+    · main(): Se guardan los resultados de todos los métodos en un mismo fichero.
 
     --- COSAS QUE HABRÍA QUE CAMBIAR ---
         - Tener en cuenta que nuestra función depende de dos parámetros: Theta lo vamos cambiando (enunciado) y Fi varía en función de los intervalos que escojamos.
-        - Para FuncionCG, Fi es a lo que llamamos u en la fórmula del cambio. 
+        - Para FuncionCG, Fi es a lo que llamamos u en la fórmula del cambio.
+        - Tener en cuenta si n es par o impar a la hora de elegir un método de Simpson u otro. 
+        - Cambiar el sistema de guardado en el fichero si es necesario para distintos pasos de Theta o lo que sea.
+        - Cambiar el número de los intervalos, de a, de b etc. 
     
 - Práctica XIV: Ecuaciones diferneciales de primer orden con condiciones iniciales: Método de Euler. Encontramos las siguientes cosas:
     EDOReales: 
