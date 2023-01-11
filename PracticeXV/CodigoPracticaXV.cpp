@@ -30,6 +30,7 @@ matrix<double> SistemaYPrima(double x, matrix<double> Y){
     return YPrima;
 }
 
+// Resolución de sistemas de ecuaciones diferenciales por el método de Ronge-Kutta(cuarto orden).
 matrix<double> RK4Sistemas(int n, double h, double tmin, double tmax, matrix<double> y0){
     // Definimos el número de pasos e inicializamos x.
     double npasos = 0.0, t = tmin;

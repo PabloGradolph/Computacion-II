@@ -126,7 +126,7 @@ int main(){
     // Retornamos la matriz solución final con el h utilizado y la tolerancia.
     cout<<"El paso de tiempo h para el que la precisión de la solución es mejor que una tolerancia = "<<tol<<" es:"<<endl;
     cout<<"h = "<<h<<endl;
-    cout<<"La solución para cada tiempo la encuentras en el fichero: 'Pt17_RK4.txt'."<<endl;
+    cout<<"La solución para cada tiempo la encuentras en el fichero: 'Pt18_RK4.txt'."<<endl;
 
     return 0;
 }

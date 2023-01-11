@@ -28,7 +28,7 @@ string fname(double xmin, double xmax, double h){
 
   oss.str(string());
   oss << setprecision(1) << xmax;
-  fend = fend+"_xmax"+oss.str();
+  fend = fend+"_tol"+oss.str();
 
   oss.str(string());
   oss << setprecision(1) << h;
@@ -45,27 +45,24 @@ double FuncionYPrima(double t, double v){
 }
 
 // Función para la resolución de una ecuación diferencial por el método de Euler.
-double Euler(double h, double xmin, double xmax, double y0){
-    // Definimos el número de pasos e inicializamos x e y.
-    double npasos = 0.0, x = 0.0, y = y0;
-    npasos = (xmax - xmin)/h;
+void Euler(double h, double xmin, double y0, double tol){
+    // Inicializamos x e y.
+    double x = 0.0, y = y0;
 
     // Generamos un fichero donde guardar el resultado con la función anterior.
-    string filend = fname(xmin,xmax,h);
+    string filend = fname(xmin,tol,h);
     ofstream ff(filend);
     if (ff.is_open()){
         ff << "#DATOS PARA h=" << h << endl;
         ff << "t\tv" << endl;
-        ff << xmin << " " << y0 << endl;
-        for (int i=1; i<=npasos; i++){
+        ff << xmin << "\t" << y0 << endl;
+        do{
             // Ecuaciones del método de Euler.
-            x = xmin + i*h;
+            x = x + h;
             y = y + h*FuncionYPrima(x, y);
             ff << x << " " << y << endl; 
-        }
+        } while(57.0-y > tol);
     }
-    
-    return npasos;
 }
 
 int main(){
@@ -73,11 +70,11 @@ int main(){
     // Definimos los datos para nuestro problema en particular.
     int hlen = 3;
     double h[hlen] = {0.5, 0.1, 0.05};
-    double tmin = 0.0, tmax = 30.0, y0 = 0.0;
+    double tmin = 0.0, y0 = 0.0, tol = 10e-5;
 
     // Llamamos a la función 3 veces, una por cada h.
     for (int i=0; i<hlen; i++){
-        Euler(h[i], tmin, tmax, y0);
+        Euler(h[i], tmin, y0, tol);
     }
 
     return 0;
