@@ -13,6 +13,22 @@ using namespace std;
 #include <cmatrix>
 using namespace techsoft;
 
+// Genera ficheros de forma automática en base a dos parámetros.
+string fname(double a, double b){
+    ostringstream oss; 
+    oss << setprecision(3) << a;
+    string fend = "_t"+oss.str(); 
+
+    oss.str(string());
+    oss << setprecision(3) << b;
+    fend = fend+"_"+oss.str()+".txt";
+    return fend;
+
+    // Nombre del fichero de salida
+    // string outf = "rk4"+filend;
+    // ofstream ff(outf);
+}
+
 // Función para calcular la NormaMáxima que utilizaremos en el método Newton-Raphson.
 double NormaMaximaMatriz(matrix<double> A){
     int arows = 0, acols = 0;
@@ -47,8 +63,8 @@ matrix<double> SistemaYPrima(double x, matrix<double> Y){
     // Definimos los valores de la matriz YPrima
     YPrima(0,0) = Y(2,0);
     YPrima(1,0) = Y(3,0);
-    YPrima(2,0) = 2*(w)*sin(phi)*Y(3,0) - (k*k)*Y(0,0);
-    YPrima(3,0) = -2*(w)*sin(phi)*Y(2,0) - (k*k)*Y(1,0);
+    YPrima(2,0) = 2.*(w)*sin(phi)*Y(3,0) - (k*k)*Y(0,0);
+    YPrima(3,0) = -2.*(w)*sin(phi)*Y(2,0) - (k*k)*Y(1,0);
     return YPrima;
 }
 
