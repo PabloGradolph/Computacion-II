@@ -106,3 +106,5 @@ Documento informativo para la parte práctica del examen final de enero:
     La diferencia con el resto de prácticas anteriores es que aquí se pide hallar el valor de h necesario para que la precisión de la solución esté por debajo
     de cierta tolerancia. Para ello hemos creado un bucle do while en el main del programa que compara una solución obtenida con la anterior hasta que la diferencia
     entre estas esté por debajo de la tolerancia. De esta forma sacamos el valor de h, que se va multiplicando por 0.5 en cada iteración.
+
+    SI NO FUNCIONA TU CÓDIGO EN EL MODO DE BAJAR H, MIRAR EL CÓDIGO DE VIOLETA.
