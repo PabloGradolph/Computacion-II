@@ -7,7 +7,7 @@ Repositorio de la asignatura de computación II. Asignatura del segundo curso de
 
 <h3 align="center">Bloque 1: Introducción y primeros pasos</h3>
 
-15-09-2022 y 22-09-2022: Introducción a C++, conceptos básicos y primeros programas.
+First Days: Introducción a C++, conceptos básicos y primeros programas. También encontrarás las primeras 4 prácticas (no evaluables).
 
 Practices I - IV: Prácticas no evaluables en las que se ponen en práctica los conceptos básicos e introductorios vistos anteriormente.
 
