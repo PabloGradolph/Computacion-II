@@ -1,10 +1,13 @@
 <h1 align="center">Computación II</h1>
 
-<h3 align="center">Descripción:</h3>
-Repositorio de la asignatura de computación II. Asignatura del segundo curso del grado en física de la Universidad Autónoma de Madrid. En esta asignatura se resuelven problemas del cálculo numérico aplicables a la física mediante códigos en el lenguaje de programación C++.
+<h2>Descripción:</h2>
+Repositorio de la asignatura de computación II. Asignatura del segundo curso del grado en física de la Universidad Autónoma de Madrid. En esta asignatura se resuelven problemas del cálculo numérico aplicables a la física mediante códigos en el lenguaje de programación C++.<br><br>
 
----
+ El cálculo numérico se utiliza ampliamente en la ciencia de la computación para calcular resultados mediante un algoritmo en lugar de una solución matemática exacta. Esta técnica se usa principalmente para la modelación y la simulación, ya que permite la ejecución de códigos de computadora para calcular resultados aproximados. El cálculo numérico se usa ampliamente para aplicaciones como el análisis de datos, la optimización, la predicción de resultados, la toma de decisiones y la solución de problemas científicos.<br><br>
 
+El lenguaje de programación C++ es un lenguaje de programación de alto nivel que se utiliza, entre otras cosas, para crear aplicaciones de computación. C++ se destaca por su estructura y sintaxis sencillas, lo que lo hace un lenguaje de programación accesible para principiantes. Está también bien documentado y es compatible con gran cantidad de compiladores y sistemas operativos. El lenguaje C++ también es conocido por ser un lenguaje de programación altamente eficiente con velocidades de ejecución rápidas y una buena gestión de memoria. Estas características hacen de C++ un lenguaje de programación ideal para el desarrollo de aplicaciones de computación intensivas y de alto rendimiento.
+
+<h2>Contenidos:</h2>
 <h3 align="center">Bloque 1: Introducción y primeros pasos</h3>
 
 First Days: Introducción a C++, conceptos básicos y primeros programas. También encontrarás las primeras 4 prácticas (no evaluables).
