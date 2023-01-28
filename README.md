@@ -5,6 +5,7 @@
 
 🔢 El cálculo numérico se utiliza ampliamente en la ciencia de la computación para calcular resultados mediante un algoritmo en lugar de una solución matemática exacta. Esta técnica se usa principalmente para la modelación y la simulación, ya que permite la ejecución de códigos de computadora para calcular resultados aproximados. El cálculo numérico se usa ampliamente para aplicaciones como el análisis de datos, la optimización, la predicción de resultados, la toma de decisiones y la solución de problemas científicos.<br>
 
+[![C++](https://img.shields.io/badge/c++-red?style=for-the-badge&logo=Cplusplus&logoColor=white&labelColor=101010)]()
 El lenguaje de programación C++ es un lenguaje de programación de alto nivel que se utiliza, entre otras cosas, para crear aplicaciones de computación. C++ se destaca por su estructura y sintaxis sencillas, lo que lo hace un lenguaje de programación accesible para principiantes. Está también bien documentado y es compatible con gran cantidad de compiladores y sistemas operativos. El lenguaje C++ también es conocido por ser un lenguaje de programación altamente eficiente con velocidades de ejecución rápidas y una buena gestión de memoria. Estas características hacen de C++ un lenguaje de programación ideal para el desarrollo de aplicaciones de computación intensivas y de alto rendimiento.
 
 💼 Encuentra la documentación en: https://learn.microsoft.com/es-es/cpp/cpp/?view=msvc-170
