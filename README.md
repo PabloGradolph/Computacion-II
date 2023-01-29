@@ -3,6 +3,8 @@
 <h2>Descripción: 📄</h2>
 📊 Repositorio de la asignatura de computación II. Asignatura del segundo curso del grado en física de la Universidad Autónoma de Madrid. En esta asignatura se resuelven problemas del cálculo numérico aplicables a la física mediante códigos en el lenguaje de programación C++.<br><br>
 
+🥼 Más información de la asignatura: <a href="GuiaDocente.pdf">Guía Docente Computación II</a>
+
 🔢 El cálculo numérico se utiliza ampliamente en la ciencia de la computación para calcular resultados mediante un algoritmo en lugar de una solución matemática exacta. Esta técnica se usa principalmente para la modelación y la simulación, ya que permite la ejecución de códigos de computadora para calcular resultados aproximados. El cálculo numérico se usa ampliamente para aplicaciones como el análisis de datos, la optimización, la predicción de resultados, la toma de decisiones y la solución de problemas científicos.<br>
 
 [![C++](https://img.shields.io/badge/c++-red?style=for-the-badge&logo=Cplusplus&logoColor=white&labelColor=101010)]()
