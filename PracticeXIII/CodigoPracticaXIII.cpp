@@ -64,8 +64,8 @@ double Trapezoidal(int n, double a, double b, double TH){
 double Simpson(int n, double a, double b, double TH){
 
     // Control de errores en la entrada de n
-    if (n%2!=0){
-        cout<<"El valor n introducido es impar: n = "<<n<<endl;
+    if (n%3!=0){
+        cout<<"El valor n introducido no es múltiplo de 3: n = "<<n<<endl;
         cout<<"No se puede seguir el método Simpson 1/3"<<endl;
         return n;
     }
