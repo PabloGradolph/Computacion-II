@@ -64,8 +64,8 @@ double Trapezoidal(int n, double a, double b, double TH){
 double Simpson(int n, double a, double b, double TH){
 
     // Control de errores en la entrada de n
-    if (n%3!=0){
-        cout<<"El valor n introducido no es múltiplo de 3: n = "<<n<<endl;
+    if (n%2!=0){
+        cout<<"El valor n no es par: n = "<<n<<endl;
         cout<<"No se puede seguir el método Simpson 1/3"<<endl;
         return n;
     }
@@ -95,12 +95,12 @@ double Simpson(int n, double a, double b, double TH){
     return I;
 }
 
-// Función que calcula la integeral por la regla de Simpson 3/8 (cuando n es impar).
+// Función que calcula la integeral por la regla de Simpson 3/8 (cuando n es múltiplo de 3).
 double Simpson38(int n, double a, double b, double TH){
 
     // Control de errores en la entrada de n
-    if (n%2==0){
-        cout<<"El valor n introducido es par: n = "<<n<<endl;
+    if (n%3!=0){
+        cout<<"El valor n introducido no es múltiplo de 3: n = "<<n<<endl;
         cout<<"No se puede seguir el método Simpson 3/8"<<endl;
         return n;
     }
